@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+:root {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color-scheme: light;
+}
+
+/* ─── Global Smooth Scroll Configuration ─── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #f8fbff;
+  color: #0f172a;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Universal Theme Design Tokens ─── */
+.page-bg {
+  background: #f8fbff;
+}
+
+.lp-card {
+  background: #ffffff;
+  border: 1px solid rgba(37, 99, 235, 0.10);
+  box-shadow: 0 4px 24px -4px rgba(37, 99, 235, 0.08), 0 1px 4px rgba(0,0,0,0.03);
+}
+
+.lp-card-blue {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 60%, #3b82f6 100%);
+  box-shadow: 0 16px 40px -8px rgba(37, 99, 235, 0.45);
+}
+
+.lp-btn-primary {
+  background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 100%);
+  box-shadow: 0 8px 24px -6px rgba(37, 99, 235, 0.5);
+  color: #fff;
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.lp-btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px -6px rgba(37, 99, 235, 0.6);
+}
+
+.lp-btn-outline {
+  background: #ffffff;
+  border: 1.5px solid #2563eb;
+  color: #2563eb;
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+}
+.lp-btn-outline:hover {
+  background: #eff6ff;
+  transform: translateY(-1px);
+}
+
+/* Unified Light Inputs */
+.bank-input {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  color: #0f172a;
+  transition: all 0.2s ease;
+}
+.bank-input:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+  background: #ffffff;
+}
+.bank-input::placeholder {
+  color: #94a3b8;
+}
+
+/* Unified Card */
+.bank-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.06), 0 1px 3px rgba(0,0,0,0.03);
+}
+
+/* ─── Smooth Left-to-Right & Ambient Animations ─── */
+@keyframes glideLeftRight {
+  0% {
+    transform: translateX(-18px) translateY(0px);
+  }
+  50% {
+    transform: translateX(18px) translateY(-8px);
+  }
+  100% {
+    transform: translateX(-18px) translateY(0px);
+  }
+}
+.animate-glide-lr {
+  animation: glideLeftRight 6s ease-in-out infinite;
+}
+
+@keyframes glideRightLeft {
+  0% {
+    transform: translateX(18px) translateY(0px);
+  }
+  50% {
+    transform: translateX(-18px) translateY(-8px);
+  }
+  100% {
+    transform: translateX(18px) translateY(0px);
+  }
+}
+.animate-glide-rl {
+  animation: glideRightLeft 6s ease-in-out infinite;
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.01);
+  }
+}
+.animate-float-phone {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+@keyframes slideFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-slide-left {
+  animation: slideFromLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-slide-right {
+  animation: slideFromRight 0.8s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes waveLight {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  animation: waveLight 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(1) translateX(-20px);
+  }
+  50% {
+    opacity: 0.30;
+    transform: scale(1.08) translateX(20px);
+  }
+}
+.animate-pulse-glow {
+  animation: pulseGlow 7s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+
+/* ─── Ultra Smooth Custom Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #93c5fd;
+  border-radius: 8px;
+  border: 2px solid #f1f5f9;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
