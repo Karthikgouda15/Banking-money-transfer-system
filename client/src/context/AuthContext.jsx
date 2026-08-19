@@ -47,11 +47,24 @@ export const AuthProvider = ({ children }) => {
               setActiveAccount(userAccounts[0]);
             }
           } else {
+            // Only clear session if server explicitly says not authenticated
             logout();
           }
         } catch (err) {
-          console.error('Auth verification error:', err);
-          logout();
+          // Only logout on 401 Unauthorized — NOT on network errors or
+          // backend cold-start timeouts (Render free tier sleeps after inactivity)
+          if (err.response && err.response.status === 401) {
+            logout();
+          } else {
+            // Network error or server waking up — keep token, restore user from localStorage
+            console.warn('Auth check failed (possible cold start), preserving session:', err.message);
+            const savedUser = localStorage.getItem('bank_user_info');
+            if (savedUser) {
+              try {
+                setUser(JSON.parse(savedUser));
+              } catch (_) {}
+            }
+          }
         }
       }
       setLoading(false);
@@ -66,6 +79,7 @@ export const AuthProvider = ({ children }) => {
     if (response.data.success) {
       const { token: jwtToken, user: userData, accounts: userAccounts } = response.data;
       localStorage.setItem('bank_auth_token', jwtToken);
+      localStorage.setItem('bank_user_info', JSON.stringify(userData));
       setToken(jwtToken);
       setUser(userData);
       setAccounts(userAccounts || []);
@@ -82,6 +96,7 @@ export const AuthProvider = ({ children }) => {
     if (response.data.success) {
       const { token: jwtToken, user: userData, account } = response.data;
       localStorage.setItem('bank_auth_token', jwtToken);
+      localStorage.setItem('bank_user_info', JSON.stringify(userData));
       setToken(jwtToken);
       setUser(userData);
       setAccounts([account]);
@@ -93,6 +108,7 @@ export const AuthProvider = ({ children }) => {
   // Logout handler
   const logout = () => {
     localStorage.removeItem('bank_auth_token');
+    localStorage.removeItem('bank_user_info');
     setToken(null);
     setUser(null);
     setAccounts([]);
