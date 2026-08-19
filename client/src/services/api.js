@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+// Use environment variable if provided, otherwise default to the live Render backend API
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.PROD
+    ? 'https://banking-money-transfer-system-0tyj.onrender.com/api'
+    : '/api');
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -9,7 +14,7 @@ const api = axios.create({
   }
 });
 
-// Add token to requests
+// Add JWT token to all outbound requests
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('bank_auth_token');
@@ -26,7 +31,6 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Optional: automatically clear storage if token invalid
       if (localStorage.getItem('bank_auth_token')) {
         localStorage.removeItem('bank_auth_token');
         localStorage.removeItem('bank_user_info');

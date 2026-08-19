@@ -1,5 +1,7 @@
 # 🏦 Apex National Bank — Full-Stack Money Transfer System (MERN Stack)
 
+[![Live Frontend](https://img.shields.io/badge/Live%20Frontend-Render-46E3B7?style=flat&logo=render&logoColor=white)](https://banking-money-transfer-system.onrender.com)
+[![Live Backend](https://img.shields.io/badge/Live%20API-Render-46E3B7?style=flat&logo=render&logoColor=white)](https://banking-money-transfer-system-0tyj.onrender.com/api/health)
 [![MongoDB Atlas](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=flat&logo=mongodb&logoColor=white)](https://www.mongodb.com/cloud/atlas)
 [![Node.js](https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-339933?style=flat&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/Frontend-React%2018%20%7C%20Vite-61DAFB?style=flat&logo=react&logoColor=black)](https://reactjs.org/)
@@ -12,13 +14,14 @@ Designed with **atomic MongoDB transactions (ACID compliance)**, JWT authenticat
 
 ---
 
-## 🔗 Project Links
+## 🔗 Live Deployed Application & Links
 
-| Resource | Link |
-|---|---|
-| **🌐 Live Application (Frontend)** | [https://apex-national-bank.vercel.app](https://apex-national-bank.vercel.app) *(or your deployed Vercel URL)* |
-| **⚡ Live API Backend** | [https://apex-national-bank-api.onrender.com](https://apex-national-bank-api.onrender.com) *(or your deployed Render/Railway URL)* |
-| **🐙 GitHub Repository** | [https://github.com/your-username/banking-money-transfer-system](https://github.com/your-username/banking-money-transfer-system) |
+| Resource | URL | Status |
+|---|---|---|
+| **🌐 Live Application (Frontend)** | [https://banking-money-transfer-system.onrender.com](https://banking-money-transfer-system.onrender.com) | ✅ Active |
+| **⚡ Live REST API (Backend)** | [https://banking-money-transfer-system-0tyj.onrender.com](https://banking-money-transfer-system-0tyj.onrender.com) | ✅ Active |
+| **🩺 API Health Endpoint** | [https://banking-money-transfer-system-0tyj.onrender.com/api/health](https://banking-money-transfer-system-0tyj.onrender.com/api/health) | `{"status":"healthy"}` |
+| **🐙 GitHub Repository** | [https://github.com/Karthikgouda15/Banking-money-transfer-system](https://github.com/Karthikgouda15/Banking-money-transfer-system) | ✅ Public |
 
 ---
 
@@ -65,7 +68,7 @@ Designed with **atomic MongoDB transactions (ACID compliance)**, JWT authenticat
 Frontend:  React 18, Vite, React Router v6, Axios, Tailwind CSS v4, Lucide React
 Backend:   Node.js, Express.js, Mongoose ODM, JSON Web Token (JWT), bcryptjs, CORS
 Database:  MongoDB Atlas (Cloud Multi-Region Cluster)
-Hosting:   Vercel (Frontend) + Render / Railway (Backend)
+Hosting:   Render (Frontend Static Site + Backend Web Service)
 ```
 
 ---
@@ -113,8 +116,8 @@ Bank Project/
 
 ### Step 1: Clone Repository
 ```bash
-git clone https://github.com/your-username/banking-money-transfer-system.git
-cd banking-money-transfer-system
+git clone https://github.com/Karthikgouda15/Banking-money-transfer-system.git
+cd Banking-money-transfer-system
 ```
 
 ---
@@ -122,7 +125,6 @@ cd banking-money-transfer-system
 ### Step 2: Configure Environment Variables
 
 #### 1. Backend (`server/.env`):
-Create `server/.env`:
 ```env
 PORT=5001
 MONGO_URI=mongodb+srv://kartikagouda644_db_user:L32eBNeFGfrNm7Tq@cluster0.xigxxfy.mongodb.net/bank_transfer_db?retryWrites=true&w=majority&appName=Cluster0
@@ -131,9 +133,8 @@ CLIENT_URL=http://localhost:5173
 ```
 
 #### 2. Frontend (`client/.env`):
-Create `client/.env`:
 ```env
-VITE_API_BASE_URL=http://localhost:5001/api
+VITE_API_BASE_URL=https://banking-money-transfer-system-0tyj.onrender.com/api
 ```
 
 ---
@@ -153,7 +154,7 @@ npm install
 
 ---
 
-### Step 4: Run the Application
+### Step 4: Run the Application Locally
 
 Open two terminal windows:
 
@@ -190,7 +191,7 @@ Visit **`http://localhost:5173`** in your browser.
 ### Step-by-Step Test Scenarios
 
 #### ✅ Scenario 1: Successful Peer-to-Peer Transfer
-1. Navigate to `http://localhost:5173/login`.
+1. Navigate to `https://banking-money-transfer-system.onrender.com/login` (or `http://localhost:5173/login`).
 2. Click the **Alice** quick-fill button and submit.
 3. On the dashboard, observe Alice's initial balance: **₹15,000**.
 4. Click **"Transfer Money"**.
@@ -255,33 +256,6 @@ Visit **`http://localhost:5173`** in your browser.
   }
   ```
 - `GET /api/transactions` — Get all transactions across customer accounts.
-
----
-
-## 🌐 Production Deployment Guide
-
-### 1. Deploy Backend on [Render](https://render.com)
-1. Connect your GitHub repository to Render.
-2. Create a **Web Service** with:
-   - **Root Directory**: `server`
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm start`
-3. Add Environment Variables:
-   - `PORT` = `5001`
-   - `MONGO_URI` = `<Your_MongoDB_Atlas_URI>`
-   - `JWT_SECRET` = `<Your_Production_JWT_Secret>`
-   - `CLIENT_URL` = `https://your-frontend.vercel.app`
-
-### 2. Deploy Frontend on [Vercel](https://vercel.com)
-1. Import repository on Vercel.
-2. Configure Project Settings:
-   - **Framework Preset**: Vite
-   - **Root Directory**: `client`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-3. Add Environment Variable:
-   - `VITE_API_BASE_URL` = `https://your-backend.onrender.com/api`
-4. Click **Deploy**.
 
 ---
 

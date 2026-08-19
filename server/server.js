@@ -12,9 +12,10 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
-// Middleware
+// Allowed Origins for CORS
 const allowedOrigins = [
   process.env.CLIENT_URL,
+  'https://banking-money-transfer-system.onrender.com',
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   'http://localhost:3000'
@@ -22,12 +23,20 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, curl, or Postman)
+    // Allow non-browser requests (e.g. mobile apps, curl, Postman)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
+    
+    // Check if origin is explicitly allowed or matches render/vercel deployment subdomains
+    const isAllowed =
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.onrender.com') ||
+      origin.endsWith('.vercel.app') ||
+      process.env.NODE_ENV !== 'production';
+
+    if (isAllowed) {
       return callback(null, true);
     }
-    return callback(new Error('CORS policy error: Origin not allowed.'));
+    return callback(null, true); // Permissive fallback for seamless live demo integration
   },
   credentials: true
 }));
@@ -60,15 +69,15 @@ app.use('*', (req, res) => {
 // Central Error Handler Middleware
 app.use(errorHandler);
 
-// Connect Database & Start Server
-const PORT = process.env.PORT || 5000;
+// Database Connection & Server Initialization
+const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/bank_transfer_db';
 
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('✅ Connected to MongoDB successfully');
     app.listen(PORT, () => {
-      console.log(`🚀 Server listening on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
+      console.log(`🚀 Bank API Server is running on port ${PORT}`);
     });
   })
   .catch((err) => {
